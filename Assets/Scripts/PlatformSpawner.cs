@@ -6,6 +6,7 @@ public class PlatformSpawner : MonoBehaviour
 {
     [SerializeField] private GameObject _platformTemplate;
     [SerializeField] private bool _startGame = true;
+    private Coroutine _spawnCoroutine;
 
     // Platform spawn values
     private float _spawnYPosition = 10f; // Spawn Y position
@@ -17,9 +18,12 @@ public class PlatformSpawner : MonoBehaviour
     private float _minPlatformLength = 2f;
     private float _maxPlatformLength = 8f;
 
-    void Start()
-    {
-        StartCoroutine(SpawnPlatforms());
+    public void StartSpawn() {
+        _spawnCoroutine = StartCoroutine(SpawnPlatforms());
+    }
+
+    public void StopSpawn() {
+        StopCoroutine(_spawnCoroutine);
     }
 
     private IEnumerator SpawnPlatforms() {
