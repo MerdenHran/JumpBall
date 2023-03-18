@@ -8,6 +8,6 @@ public class Platform : MonoBehaviour
 
     void Update()
     {
-        transform.Translate(_moveSpeed * Time.deltaTime, 0, 0);
+        transform.Translate(-1 * _moveSpeed * Time.deltaTime, 0, 0);
     }
 }
