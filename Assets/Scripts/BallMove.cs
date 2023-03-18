@@ -3,22 +3,22 @@ using UnityEngine;
 public class BallMove : MonoBehaviour
 {
     [SerializeField] private float _speed = 5f;
-    private Moving _currentDirection = Moving.Stop;
-    private Moving _lastDirection = Moving.Down;
+    private Moving _currentMoveDirection = Moving.Stop;
+    private Moving _lastMoveDirection = Moving.Down;
 
-    public Moving CurrentDirection {
-        get => _currentDirection;
+    public Moving CurrentMoveDirection {
+        get => _currentMoveDirection;
         set {
-            _currentDirection = value;
-            Debug.Log($"Current direction: [{_currentDirection.ToString().ToUpper()}]");
+            _currentMoveDirection = value;
+            Debug.Log($"Current direction: [{_currentMoveDirection.ToString().ToUpper()}]");
         }
     }
 
-    public Moving LastDirection {
-        get => _lastDirection;
+    public Moving LastMoveDirection {
+        get => _lastMoveDirection;
         set {
-            _lastDirection = value;
-            Debug.Log($"Last direction: [{_lastDirection.ToString().ToUpper()}]");
+            _lastMoveDirection = value;
+            Debug.Log($"Last direction: [{_lastMoveDirection.ToString().ToUpper()}]");
         }
     }
 
@@ -27,7 +27,7 @@ public class BallMove : MonoBehaviour
         if (Input.GetMouseButtonDown(0))
             ChangeDirection();
 
-        switch (CurrentDirection) {
+        switch (CurrentMoveDirection) {
             case Moving.Up:
                 transform.Translate(0, _speed * Time.deltaTime, 0);
                 break;
@@ -42,13 +42,13 @@ public class BallMove : MonoBehaviour
 
     private void ChangeDirection()
     {
-        if (CurrentDirection == Moving.Stop) {
-            if (LastDirection == Moving.Up) {
-                CurrentDirection = Moving.Down;
+        if (CurrentMoveDirection == Moving.Stop) {
+            if (LastMoveDirection == Moving.Up) {
+                CurrentMoveDirection = Moving.Down;
                 //_lastDirection = Moving.Down;
             }
-            else if (LastDirection == Moving.Down){
-                CurrentDirection = Moving.Up;
+            else if (LastMoveDirection == Moving.Down){
+                CurrentMoveDirection = Moving.Up;
                 //_lastDirection = Moving.Down;
             }
         }
@@ -56,9 +56,21 @@ public class BallMove : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (CurrentDirection != Moving.Stop) {
-            LastDirection = CurrentDirection;
-            CurrentDirection = Moving.Stop;
+        if (CurrentMoveDirection != Moving.Stop) {
+            LastMoveDirection = CurrentMoveDirection;
+            CurrentMoveDirection = Moving.Stop;
         }
+    }
+
+    private void OnCollisionStay(Collision collision)
+    {
+        //Debug.Log("OnCollision STAY");
+    }
+
+    private void OnCollisionExit(Collision collision)
+    {
+        Debug.Log("OnCollision EXIT");
+        if(CurrentMoveDirection == Moving.Stop)
+            CurrentMoveDirection = LastMoveDirection;
     }
 }
