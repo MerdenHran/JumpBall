@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class BallMove : MonoBehaviour
 {
-    [SerializeField] private float _speed = 0.5f;
+    [SerializeField] private float _speed = 5f;
     private Moving _currentDirection = Moving.Stop;
     private Moving _lastDirection = Moving.Down;
 

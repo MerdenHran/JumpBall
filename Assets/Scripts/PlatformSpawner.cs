@@ -7,9 +7,9 @@ public class PlatformSpawner : MonoBehaviour
     [SerializeField] private GameObject _platformTemplate;
     [SerializeField] private bool _startGame = true;
 
-    private float _spawnYPosition = -10f;
+    private float _spawnYPosition = -8f;
     private float _spawnPauseTime = 1f;
-    private float _minPlatformLength = 1f;
+    private float _minPlatformLength = 2f;
     private float _maxPlatformLength = 8f;
 
     void Start()
