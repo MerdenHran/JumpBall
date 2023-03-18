@@ -8,9 +8,10 @@ public class PlatformSpawner : MonoBehaviour
     [SerializeField] private bool _startGame = true;
 
     // Platform spawn values
-    private float _spawnYPosition = 8f; // Spawn Y position
+    private float _spawnYPosition = 10f; // Spawn Y position
     private float _spawnXPostion = 3f; // Distance from center in both direction (horizontal axis)
     private float _spawnPauseTime = 1f; // Pause between spawns
+    private float _platformLifeTime = 3f; // Time before platform will be destroyed
     
     // Platform length range
     private float _minPlatformLength = 2f;
@@ -33,7 +34,8 @@ public class PlatformSpawner : MonoBehaviour
     private void SpawnObject(float x_position) {
         _platformTemplate.transform.position = new Vector3(_spawnYPosition, x_position, 0f);
         _platformTemplate.transform.localScale = transform.TransformVector(new Vector3(Random.Range(_minPlatformLength, _maxPlatformLength), 1f, 0.5f));
-        Instantiate(_platformTemplate);
+        GameObject newPlatform = Instantiate(_platformTemplate);
+        Destroy(newPlatform, _platformLifeTime);
         //Debug.Log($"{_platformTemplate.transform.localScale}");
     }
 }
