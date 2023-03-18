@@ -30,6 +30,6 @@ public class PlatformSpawner : MonoBehaviour
         _platformTemplate.transform.position = new Vector3(_spawnYPosition, x_position, 0f);
         _platformTemplate.transform.localScale = transform.TransformVector(new Vector3(Random.Range(_minPlatformLength, _maxPlatformLength), 1f, 0.5f));
         Instantiate(_platformTemplate);
-        Debug.Log($"{_platformTemplate.transform.localScale}");
+        //Debug.Log($"{_platformTemplate.transform.localScale}");
     }
 }
