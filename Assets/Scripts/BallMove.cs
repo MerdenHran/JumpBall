@@ -34,9 +34,6 @@ public class BallMove : MonoBehaviour
             case Moving.Down:
                 transform.Translate(0, -1 * _speed * Time.deltaTime, 0);
                 break;
-            case Moving.Stop:
-                //_currentDirection = _lastDirection;
-                break;
         }
     }
 
@@ -45,11 +42,9 @@ public class BallMove : MonoBehaviour
         if (CurrentMoveDirection == Moving.Stop) {
             if (LastMoveDirection == Moving.Up) {
                 CurrentMoveDirection = Moving.Down;
-                //_lastDirection = Moving.Down;
             }
             else if (LastMoveDirection == Moving.Down){
                 CurrentMoveDirection = Moving.Up;
-                //_lastDirection = Moving.Down;
             }
         }
     }
@@ -60,11 +55,6 @@ public class BallMove : MonoBehaviour
             LastMoveDirection = CurrentMoveDirection;
             CurrentMoveDirection = Moving.Stop;
         }
-    }
-
-    private void OnCollisionStay(Collision collision)
-    {
-        //Debug.Log("OnCollision STAY");
     }
 
     private void OnCollisionExit(Collision collision)

@@ -33,9 +33,8 @@ public class PlatformSpawner : MonoBehaviour
 
     private void SpawnObject(float x_position) {
         _platformTemplate.transform.position = new Vector3(_spawnYPosition, x_position, 0f);
-        _platformTemplate.transform.localScale = transform.TransformVector(new Vector3(Random.Range(_minPlatformLength, _maxPlatformLength), 1f, 0.5f));
+        _platformTemplate.transform.localScale = new Vector3(Random.Range(_minPlatformLength, _maxPlatformLength), 1f, 0.5f);
         GameObject newPlatform = Instantiate(_platformTemplate);
         Destroy(newPlatform, _platformLifeTime);
-        //Debug.Log($"{_platformTemplate.transform.localScale}");
     }
 }
