@@ -7,8 +7,12 @@ public class PlatformSpawner : MonoBehaviour
     [SerializeField] private GameObject _platformTemplate;
     [SerializeField] private bool _startGame = true;
 
-    private float _spawnYPosition = 8f;
-    private float _spawnPauseTime = 1f;
+    // Platform spawn values
+    private float _spawnYPosition = 8f; // Spawn Y position
+    private float _spawnXPostion = 3f; // Distance from center in both direction (horizontal axis)
+    private float _spawnPauseTime = 1f; // Pause between spawns
+    
+    // Platform length range
     private float _minPlatformLength = 2f;
     private float _maxPlatformLength = 8f;
 
@@ -20,8 +24,8 @@ public class PlatformSpawner : MonoBehaviour
     private IEnumerator SpawnPlatforms() {
         while (true)
         {
-            SpawnObject(3);
-            SpawnObject(-3);
+            SpawnObject(_spawnXPostion);
+            SpawnObject(-1 * _spawnXPostion);
             yield return new WaitForSeconds(_spawnPauseTime);
         }
     }
