@@ -6,20 +6,9 @@ public class BallMove : MonoBehaviour
     private Moving _currentMoveDirection = Moving.Stop;
     private Moving _lastMoveDirection = Moving.Down;
 
-    public Moving CurrentMoveDirection {
-        get => _currentMoveDirection;
-        set {
-            _currentMoveDirection = value;
-            Debug.Log($"Current direction: [{_currentMoveDirection.ToString().ToUpper()}]");
-        }
-    }
-
-    public Moving LastMoveDirection {
-        get => _lastMoveDirection;
-        set {
-            _lastMoveDirection = value;
-            Debug.Log($"Last direction: [{_lastMoveDirection.ToString().ToUpper()}]");
-        }
+    public void SetDefaultMoveDirection() {
+        _currentMoveDirection = Moving.Stop;
+        _lastMoveDirection = Moving.Down;
     }
 
     void Update()
@@ -27,7 +16,7 @@ public class BallMove : MonoBehaviour
         if (Input.GetMouseButtonDown(0) && GameController.isGameStarted)
             ChangeDirection();
 
-        switch (CurrentMoveDirection) {
+        switch (_currentMoveDirection) {
             case Moving.Up:
                 transform.Translate(0, _speed * Time.deltaTime, 0);
                 break;
@@ -37,30 +26,32 @@ public class BallMove : MonoBehaviour
         }
     }
 
-    private void ChangeDirection()
-    {
-        if (CurrentMoveDirection == Moving.Stop) {
-            if (LastMoveDirection == Moving.Up) {
-                CurrentMoveDirection = Moving.Down;
-            }
-            else if (LastMoveDirection == Moving.Down){
-                CurrentMoveDirection = Moving.Up;
-            }
-        }
-    }
-
     private void OnCollisionEnter(Collision collision)
     {
-        if (CurrentMoveDirection != Moving.Stop) {
-            LastMoveDirection = CurrentMoveDirection;
-            CurrentMoveDirection = Moving.Stop;
+        if (_currentMoveDirection != Moving.Stop) {
+            _lastMoveDirection = _currentMoveDirection;
+            _currentMoveDirection = Moving.Stop;
         }
     }
 
     private void OnCollisionExit(Collision collision)
     {
-        Debug.Log("OnCollision EXIT");
-        if(CurrentMoveDirection == Moving.Stop)
-            CurrentMoveDirection = LastMoveDirection;
+        if(_currentMoveDirection == Moving.Stop)
+            _currentMoveDirection = _lastMoveDirection;
+    }
+
+    private void ChangeDirection()
+    {
+        if (_currentMoveDirection == Moving.Stop)
+        {
+            if (_lastMoveDirection == Moving.Up)
+            {
+                _currentMoveDirection = Moving.Down;
+            }
+            else if (_lastMoveDirection == Moving.Down)
+            {
+                _currentMoveDirection = Moving.Up;
+            }
+        }
     }
 }
