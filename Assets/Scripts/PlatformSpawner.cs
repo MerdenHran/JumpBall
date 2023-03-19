@@ -1,11 +1,9 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class PlatformSpawner : MonoBehaviour
 {
     [SerializeField] private GameObject _platformTemplate;
-    [SerializeField] private bool _startGame = true;
     private Coroutine _spawnCoroutine;
 
     // Platform spawn values

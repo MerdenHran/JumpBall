@@ -3,12 +3,18 @@ using UnityEngine;
 public class BallMove : MonoBehaviour
 {
     [SerializeField] private float _speed = 5f;
-    private Moving _currentMoveDirection = Moving.Stop;
-    private Moving _lastMoveDirection = Moving.Down;
+    private Moving _moveDirection = Moving.Stop;
+    private bool _stop = false;
+    private int _score = 0;
 
-    public void SetDefaultMoveDirection() {
-        _currentMoveDirection = Moving.Stop;
-        _lastMoveDirection = Moving.Down;
+    public int Score { get => _score; }
+
+    public void SetDefault(int freezeTime = 0)
+    {
+        transform.position = new Vector3(0, 0, 0);
+        _score = 0;
+        _moveDirection = Moving.Stop;
+        _stop = false;
     }
 
     void Update()
@@ -16,42 +22,47 @@ public class BallMove : MonoBehaviour
         if (Input.GetMouseButtonDown(0) && GameController.isGameStarted)
             ChangeDirection();
 
-        switch (_currentMoveDirection) {
-            case Moving.Up:
-                transform.Translate(0, _speed * Time.deltaTime, 0);
-                break;
-            case Moving.Down:
-                transform.Translate(0, -1 * _speed * Time.deltaTime, 0);
-                break;
-        }
+        if (!_stop)
+            switch (_moveDirection)
+            {
+                case Moving.Up:
+                    transform.Translate(0, _speed * Time.deltaTime, 0);
+                    break;
+                case Moving.Down:
+                    transform.Translate(0, -1 * _speed * Time.deltaTime, 0);
+                    break;
+            }
     }
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (_currentMoveDirection != Moving.Stop) {
-            _lastMoveDirection = _currentMoveDirection;
-            _currentMoveDirection = Moving.Stop;
-        }
+        _score++;
+        _stop = true;
     }
 
     private void OnCollisionExit(Collision collision)
     {
-        if(_currentMoveDirection == Moving.Stop)
-            _currentMoveDirection = _lastMoveDirection;
+        _stop = false;
     }
 
     private void ChangeDirection()
     {
-        if (_currentMoveDirection == Moving.Stop)
+        if (_moveDirection == Moving.Stop)
+            _moveDirection = Moving.Up;
+
+        if (_stop)
         {
-            if (_lastMoveDirection == Moving.Up)
+            switch (_moveDirection)
             {
-                _currentMoveDirection = Moving.Down;
+                case Moving.Up:
+                    _moveDirection = Moving.Down;
+                    break;
+                case Moving.Down:
+                    _moveDirection = Moving.Up;
+                    break;
             }
-            else if (_lastMoveDirection == Moving.Down)
-            {
-                _currentMoveDirection = Moving.Up;
-            }
+
+            _stop = false;
         }
     }
 }
