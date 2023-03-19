@@ -4,18 +4,31 @@ using UnityEngine;
 
 public class GameController : MonoBehaviour
 {
-    [SerializeField] private bool _startGame = false;
-    [SerializeField] private PlatformSpawner spawner;
+    public static bool isGameStarted = false;
+    [SerializeField] private PlatformSpawner _spawner
+        ;
 
     // Start is called before the first frame update
     void Start()
     {
-        spawner.StartSpawn();
+        Time.timeScale = 0;
+        _spawner.StartSpawn();
     }
 
     // Update is called once per frame
     void Update()
     {
         
+    }
+
+    public void StartGame() {
+        Time.timeScale = 1;
+        isGameStarted = true;
+    }
+
+    public void PauseGame()
+    {
+        Time.timeScale = 0;
+        isGameStarted = false;
     }
 }
